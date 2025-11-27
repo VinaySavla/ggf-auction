@@ -395,7 +395,7 @@ const TeamsPage = () => {
                   </td>
                   <td className="team-info-cell">
                     <p>
-                      <strong>Players Bought:</strong> {playersBought}/12
+                      <strong>Players Bought:</strong> {playersBought}/11
                     </p>
                   </td>
                   <td className="team-info-cell">
