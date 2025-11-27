@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const CurrentBidCard = ({ bid, isDesktop, onClick }) => {
   const [isImagePopped, setIsImagePopped] = useState(false);
 
@@ -192,7 +194,7 @@ const CurrentBid = () => {
   useEffect(() => {
     const fetchCurrentBids = async () => {
       try {
-        const response = await axios.get("https://server.sarvotar.io/items/Players?limit=100000");
+        const response = await axios.get(`${API_BASE_URL}/items/Players?limit=100000`);
         const players = response.data.data;
 
         // Filter players whose auction_status is "ongoing auction"
@@ -205,7 +207,7 @@ const CurrentBid = () => {
             ongoingAuctionPlayers.map((player) => ({
               playerId: player.id,
               playerName: player.name,
-              imageUrl: `https://server.sarvotar.io/assets/${player.photo}`,
+              imageUrl: `${API_BASE_URL}/assets/${player.photo}`,
               age: player.age || "N/A",
               currentAmount: player.current_bid || "0 Kitty",
               points: player.points || "N/A",

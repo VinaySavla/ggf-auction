@@ -6,7 +6,7 @@ const TitleSponser = () => {
       {/* Background Cricket Theme */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src="MaaAmbeCupLogo.jpg" // Replace with an actual cricket background image URL
+          src="GGF.png" // Replace with an actual cricket background image URL
           alt="Cricket Theme"
           className="w-full h-full object-cover opacity-20"
         />
@@ -21,7 +21,7 @@ const TitleSponser = () => {
 
           {/* Sponsor Name */}
           <p className="text-sm md:text-2xl font-semibold text-center">
-            Smt. Javerben Suresh Jethalal Nagda Parivar
+            Godhara Graduates Forum
           </p>
 
           {/* Cricket Ball Decoration */}
@@ -47,8 +47,8 @@ const TitleSponser = () => {
         {/* Right Section */}
         <div className="overflow-hidden w-full h-auto md:w-auto md:h-96 shadow-lg rounded-lg">
           <img
-            src="TitleSponser.png" // Replace with the family image URL
-            alt="Title Sponsor Family"
+            src="GGF.png" // Replace with the family image URL
+            alt="GGF Team"
             className="w-full md:h-full object-contain rounded-lg"
           />
         </div>

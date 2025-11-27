@@ -3,6 +3,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { Play } from "lucide-react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const UpdatePage = () => {
   const [playerData, setPlayerData] = useState();
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const UpdatePage = () => {
     const playerId = queryParams.get('PlayerId');
     
     if (playerId) {
-      axios.get(`https://server.sarvotar.io/items/Players/${playerId}`)
+      axios.get(`${API_BASE_URL}/items/Players/${playerId}`)
         .then((response) => {
           setPlayerData(response.data.data);
           setLoading(false);
@@ -88,7 +90,7 @@ const UpdatePage = () => {
           <img
             className="absolute w-[450px] h-[430px] top-0 left-[510px] rounded-lg"
             alt="Clip path group"
-            src={`https://server.sarvotar.io/assets/${playerData.photo}`}
+            src={`http://72.60.203.164/assets/${playerData.photo}`}
           />
 
           <img

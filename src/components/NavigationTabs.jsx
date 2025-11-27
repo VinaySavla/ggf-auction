@@ -6,6 +6,7 @@ const NavigationTabs = () => {
   
   const tabs = [
     { name: "Teams", path: "/" },
+    { name: "Players", path: "/players" },
     // { name: "Updates", path: "/updates" },
     { name: "Sold Players", path: "/sold-players" },
     { name: "Unsold Players", path: "/unsold-players" },

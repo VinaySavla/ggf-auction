@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const SoldPlayersPage = () => {
   const [soldPlayers, setSoldPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("male");
 
   useEffect(() => {
     const fetchSoldPlayersAndTeams = async () => {
       try {
         const response = await axios.get(
-          "https://server.sarvotar.io/items/Players?limit=100000&sort=-id"
+          `${API_BASE_URL}/items/Players?limit=100000&sort=-id`
         );
         const players = response.data.data;
 
         // Fetch teams data separately if needed
-        const teamResponse = await axios.get("https://server.sarvotar.io/items/Teams");
+        const teamResponse = await axios.get(`${API_BASE_URL}/items/Teams`);
         const teamsData = teamResponse.data.data;
 
         // Map team IDs to team names
@@ -62,8 +65,42 @@ const SoldPlayersPage = () => {
       <style>{`
   .players-page {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
+  }
+
+  .gender-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .gender-tab {
+    padding: 12px 32px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .gender-tab.active {
+    background: #2563eb;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .gender-tab.inactive {
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+
+  .gender-tab:hover:not(.active) {
+    background: #e5e7eb;
   }
 
   .players-card {
@@ -113,14 +150,29 @@ const SoldPlayersPage = () => {
   .player-photo {
     height: 80px;
     width: 80px;
-    object-fit: contain;
+    object-fit: cover;
     margin: 0 auto;
     display: block;
   }
 `}</style>
 
+      <div className="gender-tabs">
+        <button
+          className={`gender-tab ${activeTab === "male" ? "active" : "inactive"}`}
+          onClick={() => setActiveTab("male")}
+        >
+          Male
+        </button>
+        <button
+          className={`gender-tab ${activeTab === "female" ? "active" : "inactive"}`}
+          onClick={() => setActiveTab("female")}
+        >
+          Female
+        </button>
+      </div>
+
       <div className="players-card">
-        <h2 className="players-title">Sold Players ({soldPlayers.length})</h2>
+        <h2 className="players-title">Sold Players ({soldPlayers.filter(p => p.gender?.toLowerCase() === activeTab).length})</h2>
         <table className="players-table">
           <thead>
             <tr>
@@ -132,14 +184,16 @@ const SoldPlayersPage = () => {
             </tr>
           </thead>
           <tbody>
-            {soldPlayers.map((player, index) => (
+            {soldPlayers
+              .filter((player) => player.gender?.toLowerCase() === activeTab)
+              .map((player, index) => (
               <tr key={player.id || index}>
                 <td>{index + 1}</td>
                 <td>{player.name}</td>
                 <td>
                   <img
                     className="player-photo"
-                    src={`https://server.sarvotar.io/assets/${player.photo}`}
+                    src={`${API_BASE_URL}/assets/${player.photo}`}
                     alt={player.name}
                   />
                 </td>

@@ -87,14 +87,14 @@ const Layout = () => {
 
     {/* Middle Section: Title and Logo */}
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <img
-        src="MaaAmbeCupLogo.jpg"
-        alt="Maa Ambe Cup Logo"
+      {/* <img
+        src="GGF.png"
+        alt="GGF Logo"
         style={styles.logo}
         onMouseOver={(e) => (e.target.style.transform = styles.logoHover.transform)}
         onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
-      />
-      <h1 className='text-lg font-bold text-center md:text-2xl'>Maa Ambe Cup - Season 5</h1>
+      /> */}
+      <h1 className='text-lg font-bold text-center md:text-2xl'>GGF Cup - Season 6</h1>
     </div>
 
     {/* Right Section: GCS Logo */}

@@ -6,6 +6,8 @@ import UpdatesPage from "./pages/UpdatePage"; // Ensure this is correct
 import SoldPlayersPage from "./pages/SoldPlayersPage";
 import UnsoldPlayersPage from "./pages/UnsoldPlayersPage";
 import YetToAuctionPage from "./pages/YetToAuctionPage";
+import PlayersPage from "./pages/PlayersPage";
+import PlayerDetailPage from "./pages/PlayerDetailPage";
 
 const App = () => {
   return (
@@ -13,6 +15,8 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<TeamsPage />} />
+          <Route path="/players" element={<PlayersPage />} />
+          <Route path="/players/:playerId" element={<PlayerDetailPage />} />
           <Route path="/sold-players" element={<SoldPlayersPage />} />
           <Route path="/unsold-players" element={<UnsoldPlayersPage />} />
           <Route path="/yet-to-auction" element={<YetToAuctionPage />} />

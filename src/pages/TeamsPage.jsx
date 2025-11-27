@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const TeamsPage = () => {
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState({});
@@ -10,13 +12,14 @@ const TeamsPage = () => {
   const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
   const [selectedPlayerImage, setSelectedPlayerImage] = useState("");
   const [selectedOwnerImage, setSelectedOwnerImage] = useState("");
+  const [activeTab, setActiveTab] = useState("male");
 
   // Fetch teams and players data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const teamResponse = await axios.get(
-          `https://server.sarvotar.io/items/Teams?limit=100000`
+          `${API_BASE_URL}/items/Teams?limit=100000`
         );
         const fetchedTeams = teamResponse.data.data;
         setTeams(fetchedTeams);
@@ -24,7 +27,7 @@ const TeamsPage = () => {
         const playersData = {};
         for (const team of fetchedTeams) {
           const teamPlayersResponse = await axios.get(
-            `https://server.sarvotar.io/items/Players?filter[team][_eq]=${team.id}&limit=100000&sort=-id`
+            `${API_BASE_URL}/items/Players?filter[team][_eq]=${team.id}&limit=100000&sort=-id`
           );
           playersData[team.id] = teamPlayersResponse.data.data;
         }
@@ -41,8 +44,8 @@ const TeamsPage = () => {
   }, []);
 
   const calculateTeamStats = (teamPlayers) => {
-    const totalPoints = 300000;
-    const requiredPlayers = 12;
+    const totalPoints = 400000;
+    const requiredPlayers = 11;
     const basePoint = 1000;
 
     if (!Array.isArray(teamPlayers) || teamPlayers.length === 0) {
@@ -105,13 +108,49 @@ const TeamsPage = () => {
   }
 
   return (
-    <div className="teams-page">
+    <div className="teams-page-container">
       <style>{`
+        .teams-page-container {
+          padding: 20px;
+        }
+
+        .gender-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 16px;
+          margin-bottom: 24px;
+        }
+
+        .gender-tab {
+          padding: 12px 32px;
+          border-radius: 9999px;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: 600;
+          transition: all 0.2s;
+        }
+
+        .gender-tab.active {
+          background: #2563eb;
+          color: white;
+          transform: scale(1.05);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .gender-tab.inactive {
+          background: #f3f4f6;
+          color: #4b5563;
+        }
+
+        .gender-tab:hover:not(.active) {
+          background: #e5e7eb;
+        }
+
         .teams-page {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-around;
-          margin: 20px;
         }
 
         .team-card {
@@ -192,6 +231,7 @@ const TeamsPage = () => {
           padding: 10px;
           border: 1px solid #ddd;
           font-size: 14px;
+          vertical-align: middle;
         }
 
         .team-table th {
@@ -285,7 +325,25 @@ const TeamsPage = () => {
         }
       `}</style>
 
-      {teams.map((team) => {
+      <div className="gender-tabs">
+        <button
+          className={`gender-tab ${activeTab === "male" ? "active" : "inactive"}`}
+          onClick={() => setActiveTab("male")}
+        >
+          Male
+        </button>
+        <button
+          className={`gender-tab ${activeTab === "female" ? "active" : "inactive"}`}
+          onClick={() => setActiveTab("female")}
+        >
+          Female
+        </button>
+      </div>
+
+      <div className="teams-page">
+      {teams
+        .filter((team) => team.gender?.toLowerCase() === activeTab)
+        .map((team) => {
         const teamPlayers = players[team.id] || [];
         const { totalPoints, pointsUsed, balancedPoints, playersBought, maxBidAllowed } =
           calculateTeamStats(teamPlayers);
@@ -295,23 +353,27 @@ const TeamsPage = () => {
             <div className="team-header">
               <img
                 className="team-logo"
-                src={`https://server.sarvotar.io/assets/${team.team_logo}`}
+                src={`${API_BASE_URL}/assets/${team.team_logo}`}
                 alt={`${team.name} Logo`}
               />
               <div className="justify-items-center text-xs sm:text-base">
                 <p className="text-base sm:text-lg">Team Owner</p>
+              {team.owner_photo && (
               <img
                 className="team-owner-photo"
-                src={`https://server.sarvotar.io/assets/${team.owner_photo}`}
+                src={`${API_BASE_URL}/assets/${team.owner_photo}`}
                 alt={`Owner of ${team.name}`}
-                onClick={() => openOwnerModal(`https://server.sarvotar.io/assets/${team.owner_photo}`)}
+                onClick={() => openOwnerModal(`${API_BASE_URL}/assets/${team.owner_photo}`)}
               />
-              <p className="text-center">{team.Owner_person}</p>
+              )}
+              {team.Owner_person && <p className="text-center">{team.Owner_person}</p>}
               </div>
             </div>
+            {team.owner_name && (
             <h4 className="text-center mb-4 text-xs sm:text-base">
               ({team.owner_name})
             </h4>
+            )}
             <h2 className="team-name">{team.name}</h2>
             <div className="team-info">
               <table>
@@ -361,10 +423,10 @@ const TeamsPage = () => {
                       <td>
                         <img
                           className="player-image"
-                          src={`https://server.sarvotar.io/assets/${player.photo}`}
+                          src={`${API_BASE_URL}/assets/${player.photo}`}
                           alt={player.name}
                           onClick={() =>
-                            openPlayerModal(`https://server.sarvotar.io/assets/${player.photo}`)
+                            openPlayerModal(`${API_BASE_URL}/assets/${player.photo}`)
                           }
                         />
                       </td>
@@ -380,6 +442,7 @@ const TeamsPage = () => {
           </div>
         );
       })}
+      </div>
 
       {isOwnerModalOpen && (
         <div className="modal" onClick={closeOwnerModal}>
