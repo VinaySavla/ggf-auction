@@ -156,7 +156,7 @@ const PlayersPage = () => {
         .player-photo {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
         }
 
         .player-name {

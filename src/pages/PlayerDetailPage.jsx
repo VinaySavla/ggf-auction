@@ -92,7 +92,7 @@ const PlayerDetailPage = () => {
     <div className="player-detail-page">
       <style>{styles}</style>
 
-      <button className="back-button" onClick={() => navigate("/players")}>
+      <button className="back-button" onClick={() => navigate("/")}>
         ← Back to Players
       </button>
 
@@ -269,7 +269,7 @@ const styles = `
   .player-photo-large img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.3s;
   }
 

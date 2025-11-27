@@ -17,12 +17,12 @@ const TitleSponser = () => {
         {/* Left Section */}
         <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-10">
           {/* Title */}
-          <h2 className="text-lg md:text-4xl font-bold mb-4 text-center">Title Sponsor</h2>
+          <h2 className="text-lg md:text-4xl font-bold mb-4 text-center">Godhara Graduates Forum</h2>
 
           {/* Sponsor Name */}
-          <p className="text-sm md:text-2xl font-semibold text-center">
+          {/* <p className="text-sm md:text-2xl font-semibold text-center">
             Godhara Graduates Forum
-          </p>
+          </p> */}
 
           {/* Cricket Ball Decoration */}
           <div className="flex justify-center items-center gap-2 mt-6">

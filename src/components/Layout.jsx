@@ -63,9 +63,9 @@ const Layout = () => {
     },},
     content: {
       flex: 1,
-      // maxWidth: '1200px',
-      margin: '0 auto',
-      // padding: '16px',
+      width: '100%',
+      boxSizing: 'border-box',
+      padding: '0 16px',
     },
   };
 
@@ -87,13 +87,13 @@ const Layout = () => {
 
     {/* Middle Section: Title and Logo */}
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* <img
-        src="GGF.png"
+      <img
+        src="GGFCUPLogo.png"
         alt="GGF Logo"
         style={styles.logo}
         onMouseOver={(e) => (e.target.style.transform = styles.logoHover.transform)}
         onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
-      /> */}
+      />
       <h1 className='text-lg font-bold text-center md:text-2xl'>GGF Cup - Season 6</h1>
     </div>
 

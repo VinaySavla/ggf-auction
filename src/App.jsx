@@ -14,8 +14,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<TeamsPage />} />
-          <Route path="/players" element={<PlayersPage />} />
+          <Route path="/" element={<PlayersPage />} />
+          <Route path="/teams" element={<TeamsPage />} />
           <Route path="/players/:playerId" element={<PlayerDetailPage />} />
           <Route path="/sold-players" element={<SoldPlayersPage />} />
           <Route path="/unsold-players" element={<UnsoldPlayersPage />} />
