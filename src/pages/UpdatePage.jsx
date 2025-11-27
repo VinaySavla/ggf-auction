@@ -112,10 +112,6 @@ const UpdatePage = () => {
     return <div className="w-full h-screen flex items-center justify-center">No player data found.</div>;
   }
 
-  // Split teams into top and bottom rows
-  const topTeams = teams.slice(0, Math.ceil(teams.length / 2));
-  const bottomTeams = teams.slice(Math.ceil(teams.length / 2));
-
   const TeamCard = ({ team }) => {
     const stats = teamStats[team.id] || {};
     return (
@@ -129,6 +125,10 @@ const UpdatePage = () => {
         </div>
         <div className="team-stat-info">
           <p className="team-name-small">{team.name}</p>
+          <div className="stat-row">
+            <span className="stat-label">Players:</span>
+            <span className="stat-value">{stats.playersBought || 0}/11</span>
+          </div>
           <div className="stat-row">
             <span className="stat-label">Kitty:</span>
             <span className="stat-value">{stats.balancedPoints?.toLocaleString() || 0}</span>
@@ -151,11 +151,12 @@ const UpdatePage = () => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
           background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-          padding: 10px;
+          padding: 4px;
           position: relative;
           overflow: hidden;
+          gap: 4px;
         }
 
         .update-page::before {
@@ -173,32 +174,41 @@ const UpdatePage = () => {
           z-index: 0;
         }
 
-        .teams-row {
+        .teams-container {
           display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
+          flex-direction: column;
+          align-items: center;
           gap: 8px;
           width: 100%;
-          max-width: 1400px;
           z-index: 1;
-          padding: 5px;
+        }
+
+        .teams-row {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: center;
+          gap: 10px;
+          width: 100%;
+          max-width: 1600px;
+          z-index: 1;
+          padding: 2px;
         }
 
         .team-stat-card {
           display: flex;
           align-items: center;
           background: rgba(255, 255, 255, 0.95);
-          border-radius: 8px;
-          padding: 8px 12px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-          gap: 8px;
-          min-width: 140px;
+          border-radius: 12px;
+          padding: 14px 18px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+          gap: 14px;
+          min-width: 220px;
           flex: 0 1 auto;
         }
 
         .team-logo-container {
-          width: 40px;
-          height: 40px;
+          width: 70px;
+          height: 70px;
           flex-shrink: 0;
         }
 
@@ -215,30 +225,30 @@ const UpdatePage = () => {
         }
 
         .team-name-small {
-          font-size: 11px;
+          font-size: 16px;
           font-weight: 700;
           color: #1e3a8a;
           margin: 0;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 100px;
+          max-width: 140px;
         }
 
         .stat-row {
           display: flex;
-          gap: 4px;
+          gap: 6px;
           align-items: center;
         }
 
         .stat-label {
-          font-size: 9px;
+          font-size: 13px;
           color: #6b7280;
           font-weight: 500;
         }
 
         .stat-value {
-          font-size: 10px;
+          font-size: 14px;
           font-weight: 700;
           color: #1f2937;
         }
@@ -253,56 +263,55 @@ const UpdatePage = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          flex: 1;
           width: 100%;
-          max-width: 600px;
-          margin: 10px 0;
+          max-width: 700px;
+          margin: 2px 0;
         }
 
         .player-card-image {
           width: 100%;
           height: auto;
-          max-height: 70vh;
+          max-height: 75vh;
           object-fit: contain;
           border-radius: 12px;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        @media (max-width: 768px) {
-          .update-page {
-            padding: 8px;
-          }
-
+        /* Tablet view - 3 cards per row */
+        @media (max-width: 1024px) {
           .teams-row {
-            gap: 6px;
+            flex-wrap: wrap;
+            gap: 8px;
           }
 
           .team-stat-card {
-            padding: 6px 8px;
-            min-width: 120px;
-            gap: 6px;
+            padding: 12px 14px;
+            min-width: 200px;
+            gap: 12px;
+            flex: 0 1 calc(33.33% - 16px);
+            max-width: calc(33.33% - 16px);
           }
 
           .team-logo-container {
-            width: 32px;
-            height: 32px;
+            width: 55px;
+            height: 55px;
           }
 
           .team-name-small {
-            font-size: 10px;
-            max-width: 80px;
+            font-size: 14px;
+            max-width: 120px;
           }
 
           .stat-label {
-            font-size: 8px;
+            font-size: 11px;
           }
 
           .stat-value {
-            font-size: 9px;
+            font-size: 12px;
           }
 
           .player-card-container {
-            max-width: 450px;
+            max-width: 500px;
           }
 
           .player-card-image {
@@ -310,29 +319,84 @@ const UpdatePage = () => {
           }
         }
 
-        @media (max-width: 480px) {
+        /* Mobile view - 2 cards per row */
+        @media (max-width: 768px) {
+          .update-page {
+            padding: 3px;
+            gap: 3px;
+          }
+
+          .teams-row {
+            gap: 6px;
+          }
+
           .team-stat-card {
-            padding: 4px 6px;
-            min-width: 100px;
-            border-radius: 6px;
+            padding: 10px 12px;
+            min-width: 160px;
+            gap: 10px;
+            border-radius: 10px;
+            flex: 0 1 calc(50% - 12px);
+            max-width: calc(50% - 12px);
           }
 
           .team-logo-container {
-            width: 28px;
-            height: 28px;
+            width: 48px;
+            height: 48px;
           }
 
           .team-name-small {
-            font-size: 9px;
-            max-width: 65px;
+            font-size: 12px;
+            max-width: 100px;
           }
 
           .stat-label {
-            font-size: 7px;
+            font-size: 10px;
           }
 
           .stat-value {
-            font-size: 8px;
+            font-size: 11px;
+          }
+
+          .player-card-container {
+            max-width: 450px;
+          }
+
+          .player-card-image {
+            max-height: 55vh;
+          }
+        }
+
+        /* Small mobile - 2 cards per row, smaller */
+        @media (max-width: 480px) {
+          .teams-row {
+            gap: 4px;
+          }
+
+          .team-stat-card {
+            padding: 8px 10px;
+            min-width: 140px;
+            border-radius: 8px;
+            gap: 8px;
+            flex: 0 1 calc(50% - 8px);
+            max-width: calc(50% - 8px);
+          }
+
+          .team-logo-container {
+            width: 40px;
+            height: 40px;
+          }
+
+          .team-name-small {
+            font-size: 11px;
+            max-width: 80px;
+          }
+
+          .stat-label {
+            font-size: 9px;
+          }
+
+          .stat-value {
+            font-size: 10px;
           }
 
           .player-card-container {
@@ -340,19 +404,12 @@ const UpdatePage = () => {
           }
 
           .player-card-image {
-            max-height: 55vh;
+            max-height: 50vh;
           }
         }
       `}</style>
 
-      {/* Top Teams Row */}
-      <div className="teams-row">
-        {topTeams.map((team) => (
-          <TeamCard key={team.id} team={team} />
-        ))}
-      </div>
-
-      {/* Player Card */}
+      {/* Player Card at Top */}
       <div ref={playerCardRef} className="player-card-container">
         <img
           className="player-card-image"
@@ -361,11 +418,18 @@ const UpdatePage = () => {
         />
       </div>
 
-      {/* Bottom Teams Row */}
-      <div className="teams-row">
-        {bottomTeams.map((team) => (
-          <TeamCard key={team.id} team={team} />
-        ))}
+      {/* Teams in 2 rows: 5 on first, 4 on second */}
+      <div className="teams-container">
+        <div className="teams-row">
+          {teams.slice(0, 5).map((team) => (
+            <TeamCard key={team.id} team={team} />
+          ))}
+        </div>
+        <div className="teams-row">
+          {teams.slice(5, 9).map((team) => (
+            <TeamCard key={team.id} team={team} />
+          ))}
+        </div>
       </div>
     </div>
   );
