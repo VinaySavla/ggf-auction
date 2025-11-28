@@ -494,7 +494,7 @@ const UpdatePage = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background-image: url('GGF.png');
+          background-image: url('GGF25.png');
           background-size: contain;
           background-position: center;
           background-repeat: no-repeat;
@@ -592,14 +592,14 @@ const UpdatePage = () => {
           align-items: center;
           justify-content: center;
           width: 100%;
-          max-width: 700px;
+          max-width: min(55vh * (1920 / 1440), 90vw);
+          aspect-ratio: 1920 / 1440;
           margin: 2px 0;
         }
 
         .player-card-image {
           width: 100%;
-          height: auto;
-          max-height: 55vh;
+          height: 100%;
           object-fit: contain;
           border-radius: 12px;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -1007,11 +1007,7 @@ const UpdatePage = () => {
           }
 
           .player-card-container {
-            max-width: 500px;
-          }
-
-          .player-card-image {
-            max-height: 45vh;
+            max-width: min(45vh * (1920 / 1440), 85vw);
           }
 
           .player-number-badge {
@@ -1090,11 +1086,7 @@ const UpdatePage = () => {
           }
 
           .player-card-container {
-            max-width: 400px;
-          }
-
-          .player-card-image {
-            max-height: 40vh;
+            max-width: min(40vh * (1920 / 1440), 90vw);
           }
 
           .player-number-badge {
@@ -1174,11 +1166,7 @@ const UpdatePage = () => {
           }
 
           .player-card-container {
-            max-width: 320px;
-          }
-
-          .player-card-image {
-            max-height: 35vh;
+            max-width: min(35vh * (1920 / 1440), 92vw);
           }
 
           .player-number-badge {
