@@ -260,12 +260,12 @@ const PlayersPage = () => {
         >
           Male
         </button>
-        {/* <button
+        <button
           className={`gender-tab ${activeTab === "female" ? "active" : "inactive"}`}
           onClick={() => setActiveTab("female")}
         >
           Female
-        </button> */}
+        </button>
       </div>
 
       <p className="players-count">
