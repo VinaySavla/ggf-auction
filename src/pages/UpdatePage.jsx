@@ -91,9 +91,9 @@ const UpdatePage = () => {
     localStorage.setItem('auctionState', JSON.stringify(state));
   }, [auctionStarted, remainingNumbers, unsoldQueue, completedNumbers, isUnsoldPhase, auctionComplete, playerId]);
 
-  // Initialize remaining numbers (1-95)
+  // Initialize remaining numbers (1-96)
   const initializeNumbers = useCallback(() => {
-    const numbers = Array.from({ length: 95 }, (_, i) => i + 1);
+    const numbers = Array.from({ length: 96 }, (_, i) => i + 1);
     // Shuffle array
     for (let i = numbers.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
